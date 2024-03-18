@@ -14,7 +14,7 @@
                           <div class="row mb-3">
                               <label for="{{ $appId }}" class="col-md-4 col-form-label text-md-end">{{ $appName }}</label>
                            <div class="col-md-6">
-                             <input id="{{ $appId }}" type="text" class="form-control @error($appName) is-invalid @enderror" name="{{ $appName . '_' . $appId }}" value="{{ old($appName) }}" autofocus>
+                             <input id="{{ $appId }}" type="text" class="form-control @error($appName) is-invalid @enderror" name="{{ $inputName}}" value="{{ old($appName) }}" autofocus>
                                @error($appName)
                                       <span class="invalid-feedback" role="alert">
                                              <strong>{{ $message }}</strong>
