@@ -76,4 +76,16 @@ class ProfileController extends Controller
             ->withErrors ($appNames);
 
     }
+
+    public function FetchAppNames(){
+
+           //fetching Application Names and sending it to the view
+        $applications= Application::select('name','application_id')
+            ->get()
+            ->pluck('name','application_id')
+            ->toArray();
+
+            return view('profileSetup',compact('applications'));
+
+    }
 }

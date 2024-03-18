@@ -9,12 +9,13 @@
 
                     <div class="card-body">
                         <form method="POST" action="{{ route('apiToken') }}">
-
+                          
+                         @foreach($applications as $appId => $appName)
                             <div class="row mb-3">
-                                <label for="tiktok" class="col-md-4 col-form-label text-md-end">{{ __('TikTok API Token') }}</label>
+                                <label for="{{ $appId}}" class="col-md-4 col-form-label text-md-end">{{ $appName }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="tiktok" type="text" class="form-control @error('text') is-invalid @enderror" name="tiktok" value="{{ old('tiktok') }}"  autofocus>
+                                    <input id="{{$appId}}" type="text" class="form-control @error('text') is-invalid @enderror" name="{{ $appName }}" value="{{ old('{{$appName}}') }}"  autofocus>
 
                                     @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -23,7 +24,7 @@
                                     @enderror
                                 </div>
                             </div>
-
+                        @endforeach
 {{--                            IG--}}
                             <div class="row mb-3">
                                 <label for="instagram" class="col-md-4 col-form-label text-md-end">{{ __('Instagram API Token') }}</label>
