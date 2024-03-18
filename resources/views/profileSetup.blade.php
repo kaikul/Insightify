@@ -10,7 +10,7 @@
                     <div class="card-body">
                         <form method="POST" action="{{ route('apiToken') }}">
                           
-                         @foreach($applications as $appId => $appName)
+                         @foreach($appNames as $appId => $appName)
                             <div class="row mb-3">
                                 <label for="{{ $appId}}" class="col-md-4 col-form-label text-md-end">{{ $appName }}</label>
 

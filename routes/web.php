@@ -24,4 +24,4 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 //Setting up API Keys with the profile
 Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile');
 Route::post('/apiToken', [App\Http\Controllers\ProfileController::class, 'saveAPITokens'])->name('apiToken');
-Route::post('/apiToken', [App\Http\Controllers\ProfileController::class, 'FetchAppNames'])->name('appNames');
+
