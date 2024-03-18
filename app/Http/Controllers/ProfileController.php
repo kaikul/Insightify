@@ -25,7 +25,19 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        return view('profileSetup');
+        $applicationNames = $this->getAppNames();
+        return view('profileSetup', compact('applicationNames'));
+    }
+
+    protected function getAppNames()
+     {
+        $applicationNames = Application::select('name', 'application_id')
+        ->get()
+        ->pluck('name', 'application_id')
+        ->toArray();
+
+
+        return $applicationNames;
     }
 
 
@@ -41,42 +53,32 @@ class ProfileController extends Controller
             ->pluck('name','application_id')
             ->toArray();
 
-
+     
         //Compare the applications and the input from input page
 
         if (count($appNames) == count($request->post()))
             {
                 $application_id = 0;
                 $appCount=0;
-                foreach ($request->post() as $keyToken => $valueToken)
-                {
-                    if ($appCount>count($appNames))
-                        break;
-                    $appCount=+1;
-
-                    foreach ($appNames as $keyApp => $appValue)
-                    {
-                        if (strtolower($appValue) == $keyToken)
-                        {
-
-                            $application_id = $keyApp;
-                            break;
-                        }
+                foreach ($appNames as $appId => $appName) {
+                    $inputName = strtolower(implode('_', str_split($appName . '_' . $appId)));
+            
+                    if ($request->has($inputName)) {
+                        $token = new Token();
+                        $token->application_token = $request->input($inputName);
+                        $token->application_id_fk = $appId;
+                        $token->save();
+                        unset($appNames[$appId]); 
                     }
-                    unset($appNames[$application_id]);
-                    $token = new Token();
-
-                    $token->application_token = $valueToken;
-                    $token->application_id_fk = $application_id;
-                    $token->save();
                 }
-            }
-        return redirect('profile')
-            ->withInput ()
-            ->withErrors ($appNames)
-            ->with('appNames',$appNames);
+            dd($request->all());
+                return redirect('profile')
+                    ->withInput()
+                    ->withErrors($appNames);
+            
+            
 
     }
 
-    
+}
 }
