@@ -11,18 +11,21 @@
                         <form method="POST" action="{{ route('apiToken') }}">
                           
                         @foreach($applicationNames as $appId => $appName)
-                          <div class="row mb-3">
-                              <label for="{{ $appId }}" class="col-md-4 col-form-label text-md-end">{{ $appName }}</label>
-                           <div class="col-md-6">
-                             <input id="{{ $appId }}" type="text" class="form-control @error($appName) is-invalid @enderror" name="{{ $inputName}}" value="{{ old($appName) }}" autofocus>
-                               @error($appName)
-                                      <span class="invalid-feedback" role="alert">
-                                             <strong>{{ $message }}</strong>
-                                         </span>
-                               @enderror
+                                @php
+                                  $inputName = strtolower($appName . '_' . $appId);
+                                @endphp
+                                <div class="row mb-3">
+                                    <label for="{{ $appId }}" class="col-md-4 col-form-label text-md-end">{{ $appName }}</label>
+                                    <div class="col-md-6">
+                                        <input id="{{ $appId }}" type="text" class="form-control @error($inputName) is-invalid @enderror" name="{{ $inputName }}" value="{{ old($appName) }}" autofocus>
+                                        @error($appName)
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
                                 </div>
-                                </div>
-                         @endforeach
+                            @endforeach
                             <div class="row mb-0">
                                 <div class="col-md-8 offset-md-4">
                                     <button type="submit" class="btn btn-primary">

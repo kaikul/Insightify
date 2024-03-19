@@ -40,45 +40,34 @@ class ProfileController extends Controller
         return $applicationNames;
     }
 
-
     protected function saveAPITokens(Request $request)
     {
-
-        $token = new Token();
-        //Get Applicaition Data
-
-
-        $appNames = Application::select('name','application_id')
-            ->get()
-            ->pluck('name','application_id')
-            ->toArray();
-
-     
-        //Compare the applications and the input from input page
-
-        if (count($appNames) == count($request->post()))
-            {
-                $application_id = 0;
-                $appCount=0;
-                foreach ($appNames as $appId => $appName) {
-                    $inputName = strtolower(implode('_', str_split($appName . '_' . $appId)));
-            
-                    if ($request->has($inputName)) {
-                        $token = new Token();
-                        $token->application_token = $request->input($inputName);
-                        $token->application_id_fk = $appId;
-                        $token->save();
-                        unset($appNames[$appId]); 
-                    }
-                }
-            dd($request->all());
-                return redirect('profile')
-                    ->withInput()
-                    ->withErrors($appNames);
-            
-            
-
+        // Get Application Data
+        $appNames = Application::pluck('name', 'application_id')->toArray();
+    
+        
+        $inputNames = [];
+    
+        // Iterate through the applications and check for their corresponding inputs
+        foreach ($appNames as $appId => $appName) {
+            $inputName = strtolower($appName . '_' . $appId);
+    
+            // Check if input exists in the request
+            if ($request->has($inputName)) {
+                $token = new Token();
+                $token->application_token = $request->input($inputName);
+                $token->application_id_fk = $appId;
+                $token->save();
+                unset($appNames[$appId]);
+               
+            }
+        }
+    dd($request->all());
+        
+        return redirect('profile')
+        ->withInput()
+        ->withErrors($appNames);
+        
     }
 
-}
 }
