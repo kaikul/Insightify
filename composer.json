@@ -62,8 +62,11 @@
         "allow-plugins": {
             "pestphp/pest-plugin": true,
             "php-http/discovery": true
-        }
+        },
+        "process-timeout": 3600 
     },
+    
     "minimum-stability": "stable",
     "prefer-stable": true
+    
 }
