@@ -57,12 +57,17 @@ class ProfileController extends Controller
                 $token = new Token();
                 $token->application_token = $request->input($inputName);
                 $token->application_id_fk = $appId;
+
+                if($request->has($inputName .'_id') && $request->has($inputName . '_secret')){
+                    $token->application_ID=$request->input($inputName .'_id');
+                    $token->application_secret=$request->input($inputName . '_secret');
+                }
                 $token->save();
                 unset($appNames[$appId]);
                
             }
         }
-    dd($request->all());
+    
         
         return redirect('profile')
         ->withInput()
