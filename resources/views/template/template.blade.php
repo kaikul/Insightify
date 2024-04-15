@@ -78,7 +78,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="profile">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>ProfileSetup</span></a>
             </li>
@@ -93,7 +93,7 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-target="#collapseTwo"
+                <a class="nav-link collapsed" href="post" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Posts</span>
