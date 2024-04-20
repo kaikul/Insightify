@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Application;
+use App\Models\ApiLogs;
 use App\Models\Token as Token;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -86,48 +87,7 @@ class ProfileController extends Controller
         
     }
 
-    public function postPage(Request $request)
-{
-    // Fetch Instagram posts
-    $posts = $this->FetchInstagramPosts($request);
-
-    // Check if posts were successfully fetched
-    if ($posts === false) {
-        // Handle error when posts cannot be fetched
-        return response()->json(['error' => 'Failed to fetch Instagram posts'], 500);
-    }
-
-    // Pass the fetched posts to the view
-    return view('post', ['posts' => $posts]);
-}
-
-
-    protected function FetchInstagramPosts(Request $request)
-{
-    // Fetch the access token from the database based on application_id_fk = 2 and token_id = 17
-    $token = Token::where('application_id_fk', 2)
-        ->where('token_id', 17)
-        ->first();
-
-    if (!$token) {
-        // Handle the case when the access token is not found in the database
-        return response()->json(['error' => 'Access token not found'], 404);
-    }
-
-    $client = new Client();
-    //request toward the instagram Api
-    $response = $client->get('https://graph.instagram.com/me/media?fields=id,caption,media_type,media_url,permalink,timestamp&access_token=' . $token->application_token);
-
-    if ($response->getStatusCode() != 200) {
-        // Handle the case when the API request fails
-        return response()->json(['error' => 'API request failed'], $response->getStatusCode());
-    }
-
-    $posts = json_decode($response->getBody(), true)['data'];
-
     
-    return $posts; 
-}
 
 
    

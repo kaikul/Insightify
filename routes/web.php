@@ -24,8 +24,9 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 //Setting up API Keys with the profile
 Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile');
 Route::post('/apiToken', [App\Http\Controllers\ProfileController::class, 'saveAPITokens'])->name('apiToken');
-Route::get('/post', [App\Http\Controllers\ProfileController::class, 'postPage'])->name('postPage');
-Route::post('/post', [App\Http\Controllers\ProfileController::class, 'FetchInstagramPosts'])->name('FetchInstagramPosts');
-
+Route::get('/post', [App\Http\Controllers\PostController::class, 'postPage'])->name('postPage');
+Route::post('/post', [App\Http\Controllers\PostController::class, 'GetPost'])->name('GetPost');
+Route::get('/check', [App\Http\Controllers\PostController::class, 'CheckPost'])->name('CheckPost');
+Route::get('/sync-instagram-posts', [App\Http\Controllers\PostController::class, 'SyncAll'])->name('SyncAll');
 
 
